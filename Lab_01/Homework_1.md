@@ -4,6 +4,7 @@
 
 **Схема**
 
+![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_01/PIC/Shema.png)
 
 
 **Исходные данные**
@@ -64,7 +65,7 @@ d.	Изучите характеристики SVI для VLAN 1.
 >> Нет
 
 > Какой MAC-адрес имеет SVI?
->> 
+>> 0060.5c4a.e706
 
 >Данный интерфейс включен?
 >> Нет. Отключен
@@ -72,12 +73,12 @@ d.	Изучите характеристики SVI для VLAN 1.
 
 e.	Изучите IP-свойства интерфейса SVI сети VLAN 1.
 > Какие выходные данные вы видите?
->>
+>> Ip Адреса нет
 
 f.	Подсоедините кабель Ethernet компьютера PC-A к порту 6 на коммутаторе и изучите IP-свойства интерфейса SVI сети VLAN 1. Дождитесь согласования параметров скорости и дуплекса между коммутатором и ПК.
 
 > Какие выходные данные вы видите?
->>
+>> Full-duplex, 100Mb/s
 
 
 g.	Изучите сведения о версии ОС Cisco IOS на коммутаторе.
@@ -95,43 +96,177 @@ g.	Изучите сведения о версии ОС Cisco IOS на комм�
 h.	Изучите свойства по умолчанию интерфейса FastEthernet, который используется компьютером PC-A.
 Switch# show interface f0/6 
 
-Интерфейс включен или выключен?
+<details><summary>Лог</summary>
+<pre>
+    Switch>show interface f0/6
+FastEthernet0/6 is up, line protocol is up (connected)
+  Hardware is Lance, address is 0060.5c4a.e706 (bia 0060.5c4a.e706)
+ BW 100000 Kbit, DLY 1000 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  Keepalive set (10 sec)
+  Full-duplex, 100Mb/s
+  input flow-control is off, output flow-control is off
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 00:00:08, output 00:00:05, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue :0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     956 packets input, 193351 bytes, 0 no buffer
+     Received 956 broadcasts, 0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored, 0 abort
+     0 watchdog, 0 multicast, 0 pause input
+     0 input packets with dribble condition detected
+     2357 packets output, 263570 bytes, 0 underruns
+     0 output errors, 0 collisions, 10 interface resets
+     0 babbles, 0 late collision, 0 deferred
+     0 lost carrier, 0 no carrier
+     0 output buffer failures, 0 output buffers swapped out
 
-Что нужно сделать, чтобы включить интерфейс?
+</pre>
+</details>
 
-Какой MAC-адрес у интерфейса?
+> Интерфейс включен или выключен?
+>> Включен
 
-Какие настройки скорости и дуплекса заданы в интерфейсе?
+
+> Что нужно сделать, чтобы включить интерфейс?
+>> ввести команду **noshutdown**
+
+
+> Какой MAC-адрес у интерфейса?
+>> 0060.5c4a.e706
+
+
+> Какие настройки скорости и дуплекса заданы в интерфейсе?
+>> Full-duplex, 100Mb/s
+
 
 i.	Изучите параметры сети VLAN по умолчанию на коммутаторе.
 
-Какое имя присвоено сети VLAN 1 по умолчанию?
+<details><summary>Лог Vlan (brief) </summary>
+<pre>
+Switch>show  vlan brief
 
-Какие порты расположены в сети VLAN 1?
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa0/1, Fa0/2, Fa0/3, Fa0/4
+                                                Fa0/5, Fa0/6, Fa0/7, Fa0/8
+                                                Fa0/9, Fa0/10, Fa0/11, Fa0/12
+                                                Fa0/13, Fa0/14, Fa0/15, Fa0/16
+                                                Fa0/17, Fa0/18, Fa0/19, Fa0/20
+                                                Fa0/21, Fa0/22, Fa0/23, Fa0/24
+                                                Gig0/1, Gig0/2
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active   
+</pre>
+</details>
 
-Активна ли сеть VLAN 1?
 
-К какому типу сетей VLAN принадлежит VLAN по умолчанию?
+<details><summary>Лог Vlan 1</summary>
+<pre>
+Switch>show interfaces vlan 1
+Vlan1 is administratively down, line protocol is down
+  Hardware is CPU Interface, address is 0004.9ab3.922e (bia 0004.9ab3.922e)
+  MTU 1500 bytes, BW 100000 Kbit, DLY 1000000 usec,
+     reliability 255/255, txload 1/255, rxload 1/255
+  Encapsulation ARPA, loopback not set
+  ARP type: ARPA, ARP Timeout 04:00:00
+  Last input 21:40:21, output never, output hang never
+  Last clearing of "show interface" counters never
+  Input queue: 0/75/0/0 (size/max/drops/flushes); Total output drops: 0
+  Queueing strategy: fifo
+  Output queue: 0/40 (size/max)
+  5 minute input rate 0 bits/sec, 0 packets/sec
+  5 minute output rate 0 bits/sec, 0 packets/sec
+     1682 packets input, 530955 bytes, 0 no buffer
+     Received 0 broadcasts (0 IP multicast)
+     0 runts, 0 giants, 0 throttles
+     0 input errors, 0 CRC, 0 frame, 0 overrun, 0 ignored
+     563859 packets output, 0 bytes, 0 underruns
+     0 output errors, 23 interface resets
+     0 output buffer failures, 0 output buffers swapped out
+</pre>
+</details>
+
+> Какое имя присвоено сети VLAN 1 по умолчанию?
+>> default (по умолчанию нет имени)
+
+> Какие порты расположены в сети VLAN 1?
+>> Все
+
+> Активна ли сеть VLAN 1?
+>> да
+
+> К какому типу сетей VLAN принадлежит VLAN по умолчанию?
+> >  VLAN1
+
 
 j.	Изучите флеш-память.
-
 Выполните одну из следующих команд, чтобы изучить содержимое флеш-каталога.
 
 Switch# show flash 
 
 Switch# dir flash: 
 
+
+<details><summary>Лог </summary>
+<pre>
+Switch#dir flash:
+Directory of flash:/
+
+    1  -rw-     4670455          <no date>  2960-lanbasek9-mz.150-2.SE4.bin
+
+64016384 bytes total (59345929 bytes free)
+Switch#show flash
+Directory of flash:/
+
+    1  -rw-     4670455          <no date>  2960-lanbasek9-mz.150-2.SE4.bin
+
+64016384 bytes total (59345929 bytes free)
+</pre>
+</details>
+
 В конце имени файла указано расширение, например .bin. Каталоги не имеют расширения файла.
 
-Какое имя присвоено образу Cisco IOS?
-
+> Какое имя присвоено образу Cisco IOS?
+>> 2960-lanbasek9-mz.150-2.SE4
 ---
 
 ### Часть 2. Настройка базовых параметров сетевых устройств
 
 #### Шаг 1. Настройте базовые параметры коммутатора.
 
+a.	В режиме глобальной конфигурации скопируйте следующие базовые параметры конфигурации и вставьте их в файл на коммутаторе S1. 
+
+![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_01/PIC/2-1-a.png)
+
+
+b.	Назначьте IP-адрес интерфейсу SVI на коммутаторе. Благодаря этому вы получите возможность удаленного управления коммутатором.
+
+![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_01/PIC/2-1-b.png)
+
+
+c.	Доступ через порт консоли также следует ограничить  с помощью пароля. Используйте cisco в качестве пароля для входа в консоль в этом задании. Конфигурация по умолчанию разрешает все консольные подключения без пароля. Чтобы консольные сообщения не прерывали выполнение команд, используйте параметр logging synchronous.
+
+![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_01/PIC/2-2-c.png)
+
+
+d.	Настройте каналы виртуального соединения для удаленного управления (vty), чтобы коммутатор разрешил доступ через Telnet. Если не настроить пароль VTY, будет невозможно подключиться к коммутатору по протоколу Telnet.
+
+![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_01/PIC/2-2-d.png)
+
+> Для чего нужна команда login?
+>> С помощью команды login указываем циске при подключении запрос пароля 
+
 #### Шаг 2. Настройте IP-адрес на компьютере PC-A.
+
+![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_01/PIC/2-2.png)
 
 ---
 
