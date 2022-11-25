@@ -14,7 +14,7 @@
   
 
    
-<details><summary>Текст</summary>
+<details><summary> Код </summary>
 <pre>
     !!(orang)ТЕКСТ ТЕКСТ ТЕКСТ ТЕКСТ!!
 </pre>
