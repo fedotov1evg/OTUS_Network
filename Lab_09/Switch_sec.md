@@ -294,6 +294,30 @@ o	Aging type: неактивный
 
 c.	Verify port security on S1 F0/6.
 
+<details><summary> Лог настройки  порта  F0/6 </summary>
+<pre>
+
+S1(config)#int f0/6
+S1(config-if)#switch port-se
+S1(config-if)#switch port-security 
+S1(config-if)#switch port-security maximum 3
+S1(config-if)#switchport port-security violation restrict 
+S1(config-if)#switchport port-security aging time 60
+S1(config-if)#switchport port-security aging type ?
+% Unrecognized command
+
+</pre>
+</details>
+
+
+
+![alt-текст]()
+
+не удалось настроить **switchport port-security aging type** , отсутсвует команда 
+
+![alt-текст]()
+
+
 
 
 d.	Включите безопасность порта для F0 / 18 на S2. Настройте каждый активный порт доступа таким образом, чтобы он автоматически добавлял адреса МАС, изученные на этом порту, в текущую конфигурацию.
@@ -307,6 +331,25 @@ o	Тип безопасности: Protect
 o	Aging time: 60 мин.
 
 f.	Проверка функции безопасности портов на S2 F0/18.
+
+
+<details><summary> Лог настройки  порта  F0/18 </summary>
+<pre>
+
+S2>en
+S2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S2(config)#int f0/18
+S2(config-if)#switch port-security
+S2(config-if)#switch port-security maximum 2
+S2(config-if)#switchport port-security violation p
+S2(config-if)#switchport port-security violation protect 
+S2(config-if)#switchport port-security aging time 60
+S2(config-if)#
+
+</pre>
+</details>
+
 
 
 ##### Шаг 5. Реализовать безопасность DHCP snooping.
