@@ -37,7 +37,12 @@
 
 #### Шаг 1. Создайте сеть согласно топологии.
 
+![alt-текст]()
+
 #### Шаг 2. Произведите базовую настройку маршрутизаторов.
+
+<details><summary> Задание настройки маршрутизаторов </summary>
+<pre>
 
 a.	Назначьте маршрутизатору имя устройства.
 b.	Отключите поиск DNS, чтобы предотвратить попытки маршрутизатора неверно преобразовывать введенные команды таким образом, как будто они являются именами узлов.
@@ -48,7 +53,64 @@ f.	Зашифруйте открытые пароли.
 g.	Создайте баннер с предупреждением о запрете несанкционированного доступа к устройству.
 h.	Сохраните текущую конфигурацию в файл загрузочной конфигурации.
 
+</pre>
+</details>
+
+<details><summary> Код настройки R1 </summary>
+<pre>
+enable
+conf term
+no ip domain-lookup
+hostname R1
+banner motd ### R1 ENTER PASSWORD ####
+line console 0
+logging synchronous
+password cisco
+login
+exit
+enable secret class
+line vty 0 15
+password cisco
+login
+exit
+service password-encryption
+exit
+
+copy running-config startup-config
+
+</pre>
+</details>
+
+<details><summary> Код настройки R2 </summary>
+<pre>
+enable
+conf term
+no ip domain-lookup
+hostname R2
+banner motd ### R2 ENTER PASSWORD ####
+line console 0
+logging synchronous
+password cisco
+login
+exit
+enable secret class
+line vty 0 15
+password cisco
+login
+exit
+service password-encryption
+exit
+
+copy running-config startup-config
+
+</pre>
+</details>
+
+
 #### Шаг 3. Настройте базовые параметры каждого коммутатора.
+
+<details><summary> Задание настройки коммутатора </summary>
+<pre>
 
 a.	Назначьте коммутатору имя устройства.
 
@@ -66,6 +128,60 @@ g.	Создайте баннер с предупреждением о запре
 
 h.	Сохраните текущую конфигурацию в файл загрузочной конфигурации.
 
+</pre>
+</details>
+
+<details><summary> Код настройки S1 </summary>
+<pre>
+enable
+conf term
+no ip domain-lookup
+hostname S1
+banner motd ### S1 ENTER PASSWORD ####
+line console 0
+logging synchronous
+password cisco
+login
+exit
+enable secret class
+line vty 0 15
+password cisco
+login
+exit
+service password-encryption
+exit
+
+copy running-config startup-config
+
+</pre>
+</details>
+
+
+<details><summary> Код настройки S2 </summary>
+<pre>
+enable
+conf term
+no ip domain-lookup
+hostname S2
+banner motd ### S2 ENTER PASSWORD ####
+line console 0
+logging synchronous
+password cisco
+login
+exit
+enable secret class
+line vty 0 15
+password cisco
+login
+exit
+service password-encryption
+exit
+
+copy running-config startup-config
+
+</pre>
+</details>
+
 ---
 
 ### Часть 2. Настройка и проверка базовой работы протокола OSPFv2 для одной области
@@ -74,7 +190,39 @@ h.	Сохраните текущую конфигурацию в файл заг
 
 a.	Настройте адреса интерфейсов на каждом маршрутизаторе, как показано в таблице адресации выше.
 
+<details><summary> лог настрйоки R1 </summary>
+<pre>
+R1(config)#int g0/0/1
+R1(config-if)#ip add 10.53.0.1 255.255.255.0
+R1(config-if)#no shutdown
+R1(config-if)#
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/1, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/1, changed state to up
+R1(config-if)#ex
+R1(config)#int Loopback 1
+R1(config-if)#
+%LINK-5-CHANGED: Interface Loopback1, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Loopback1, changed state to up
+R1(config-if)#ip add 172.16.1.1 255.255.255.0
+R1(config-if)#no shutdown
+R1(config-if)#ex
+R1(config)#
+
+</pre>
+</details>
+
+![alt-текст]()
+
+![alt-текст]()
+
+![alt-текст]()
+
+![alt-текст]()
+
+
 b.	Перейдите в режим конфигурации маршрутизатора OSPF, используя идентификатор процесса 56.
+
+router ospf 56
 
 c.	Настройте статический идентификатор маршрутизатора для каждого маршрутизатора (1.1.1.1 для R1, 2.2.2.2 для R2).
 
