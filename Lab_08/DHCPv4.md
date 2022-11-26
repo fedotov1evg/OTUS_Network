@@ -403,6 +403,10 @@ end
 </pre>
 </details>
 
+**Команды lease 2 12 30 infinite нет в Packet Tracer**
+
+![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_08/pic/2-1-f-er.png)
+
 
 g.	Затем настройте второй пул DHCPv4, используя имя пула R2_Client_LAN и вычислите сеть, маршрутизатор по умолчанию, и используйте то же имя домена и время аренды, что и предыдущий пул DHCP.
 
@@ -459,7 +463,12 @@ b.	Выполните команду show ip dhcp bindings для проверк
 
 c.	Выполните команду show ip dhcp server statistics для проверки сообщений DHCP.
 
-***Команда не работает***
+
+
+**Команды "ip dhcp server statistics" нет в Packet Tracer**
+
+![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_08/pic/2-3-c-er.png)
+
 
 
 
@@ -512,4 +521,8 @@ d.	Выполните show ip dhcp binding для R1 для проверки н�
 
 e.	Выполните команду show ip dhcp server statistics для проверки сообщений DHCP.
 
-***КОМАНДА НЕ РАБОТАЕТ***
+**Команды "ip dhcp server statistics" нет в Packet Tracer**
+
+![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_08/pic/2-3-c-er.png)
+
+
