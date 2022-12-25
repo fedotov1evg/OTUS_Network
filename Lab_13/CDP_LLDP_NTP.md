@@ -27,6 +27,7 @@
 
 #### Шаг 1. Создайте сеть согласно топологии.
 
+![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_13/pic/1png)
 
 #### Шаг 2. Настройте базовые параметры для маршрутизатора.
 
@@ -62,9 +63,17 @@ password cisco
 login
 exit
 service password-encryption
+
+interface gigabitEthernet 0/0/1
+description R1 for S1
+ip add 10.22.0.1 255.255.255.0
+no shutdown
 exit
 
-h.	Настройка интерфейсов, перечисленных в таблице выше
+interface  Loopback1
+ip add 172.16.1.1 255.255.255.0
+no shutdown
+exit
 
 copy running-config startup-config
 </pre>
@@ -93,6 +102,7 @@ enable
 conf term
 no ip domain-lookup
 hostname S1
+banner motd "Only authorized users!"
 line console 0
 logging synchronous
 password cisco
@@ -106,14 +116,22 @@ exit
 service password-encryption
 exit
 
-g.	Создайте баннер, который предупреждает всех, кто обращается к устройству, видит баннерное сообщение «Только авторизованные пользователи!».  
-h.	Отключите неиспользуемые интерфейсы
+interface range fastEthernet 0/2-4, fastEthernet 0/6-24, gigabitEthernet 0/1-2
+shutdown
+exit
+
+interface range fastEthernet 0/1
+description S1 for S2
+exit
+
+interface range fastEthernet 0/5
+description S1 for R2
+exit
 
 copy running-config startup-config
   </pre>
   </details>
 
-![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_13/pic/1-3-g1.png)
 
   <details><summary> Код настройки S2 </summary>
   <pre>
@@ -121,6 +139,7 @@ enable
 conf term
 no ip domain-lookup
 hostname S2
+banner motd "Only authorized users!"
 line console 0
 logging synchronous
 password cisco
@@ -134,14 +153,17 @@ exit
 service password-encryption
 exit
 
-g.	Создайте баннер, который предупреждает всех, кто обращается к устройству, видит баннерное сообщение «Только авторизованные пользователи!».  
-h.	Отключите неиспользуемые интерфейсы
+interface range fastEthernet 0/2-24, gigabitEthernet 0/1-2
+shutdown
+exit
+
+interface range fastEthernet 0/1
+description S2 for S1
+exit
 
 copy running-config startup-config
   </pre>
   </details>
-
-![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_13/pic/1-3-g2.png)
 
 
 ---
@@ -166,11 +188,24 @@ b.	На R1 используйте соответствующую команду 
 
 > Какая версия IOS используется на  S1?
 >
->     Ответ
+>     15.0(2)SE4
 
   <details><summary> Лог R1 </summary>
   <pre>
+Device ID: S1
+Entry address(es): 
+Platform: cisco 2960, Capabilities: Switch
+Interface: GigabitEthernet0/0/1, Port ID (outgoing port): FastEthernet0/5
+Holdtime: 168
 
+Version :
+Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 15.0(2)SE4, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2013 by Cisco Systems, Inc.
+Compiled Wed 26-Jun-13 02:49 by mnguyen
+
+advertisement version: 2
+Duplex: full
   </pre>
   </details>
   
@@ -180,15 +215,24 @@ c.	На S1 используйте соответствующую команду 
     show cdp traffic
 
 
+**!!Данной команды нет в Cisco packet tracer **
+
+
+![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_13/pic/2-c.png)
+
   <details><summary> Лог R1 </summary>
   <pre>
-
+S1#show cdp ?
+  entry      Information for specific neighbor entry
+  interface  CDP interface status and configuration
+  neighbors  CDP neighbor entries
+  <cr>
   </pre>
   </details>
 
 > Сколько пакетов имеет выход CDP с момента последнего сброса счетчика?
 > 
->     Ответ
+>     Данной команды нет в Cisco packet tracer
 
 
 d.	Настройте SVI для VLAN 1 на S1 и S2, используя IP-адреса, указанные в таблице адресации выше. Настройте шлюз по умолчанию для каждого коммутатора на основе таблицы адресов.
@@ -196,31 +240,57 @@ d.	Настройте SVI для VLAN 1 на S1 и S2, используя IP-а�
  
   <details><summary> Код настройки S1 </summary>
   <pre>
-
+interface vlan 1
+description SVI VLAN 1
+ip add 10.22.0.2 255.255.255.0
+no shutdown
+exit
+ip default-gateway 10.22.0.1
   </pre>
   </details>
 
   <details><summary> Код настройки S2 </summary>
   <pre>
-
+interface vlan 1
+description SVI VLAN 1
+ip add 10.22.0.3 255.255.255.0
+no shutdown
+exit
+ip default-gateway 10.22.0.1
   </pre>
   </details>
  
  <details>
   <summary>Screenshot</summary>
-  <img src="">
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_13/pic/2-d1.png)">
 </details>
 
 <details>
   <summary>Screenshot</summary>
-  <img src="">
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_13/pic/2-d2png)">
 </details>
  
 e.	На R1 выполните команду show cdp entry S1 . 
 
   <details><summary> Лог R1 -S1 </summary>
   <pre>
+R1#show cdp entry S1
 
+Device ID: S1
+Entry address(es): 
+  IP address : 10.22.0.2
+Platform: cisco 2960, Capabilities: Switch
+Interface: GigabitEthernet0/0/1, Port ID (outgoing port): FastEthernet0/5
+Holdtime: 133
+
+Version :
+Cisco IOS Software, C2960 Software (C2960-LANBASEK9-M), Version 15.0(2)SE4, RELEASE SOFTWARE (fc1)
+Technical Support: http://www.cisco.com/techsupport
+Copyright (c) 1986-2013 by Cisco Systems, Inc.
+Compiled Wed 26-Jun-13 02:49 by mnguyen
+
+advertisement version: 2
+Duplex: full
   </pre>
   </details>
 
@@ -256,12 +326,21 @@ b.	На S1 выполните соответствующую команду lldp
 
     show lldp entry S2
 
+ 
+  
+ **Данной команды нет СРТ** 
+  
+ ![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_13/pic/3-b.png)
+  
 > Что такое chassis ID  для коммутатора S2?
 > 
->    Ответ
+>    MAC-адрес устройства которое за портом Fa0/1
 
 
 c.	Соединитесь через консоль на всех устройствах и используйте команды LLDP, необходимые для отображения топологии физической сети только из выходных данных команды show.
+  
+      show lldp neighbors
+  
 
 ![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_13/pic/3-c1.png)
 
@@ -287,7 +366,7 @@ c.	Соединитесь через консоль на всех устройс
 
 | Дата	| Время	| Часовой пояс	| Источник времени |
 | :---: |:-----:| :------------:| :--------------: | 
-| | | | |
+| Mar 1 1993| *1:13:2.621| UTC | Time source is hardware calendar|
 
 <details>
   <summary>Screenshot</summary>
@@ -305,7 +384,9 @@ c.	Соединитесь через консоль на всех устройс
 
 Настройте R1 в качестве хозяина NTP с уровнем слоя 4.
 
-    Код
+    ntp server 172.16.1.1
+    ntp master 4
+    ntp update-calendar
 
 ![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_13/pic/4-3.png)
 
@@ -317,7 +398,8 @@ a.	Выполните соответствующую команду на S1 и S
 
 | Дата	| Время	| Часовой пояс	| Источник времени |
 | :---: |:-----:| :------------:| :--------------: | 
-| | | | |
+| Mon Mar 1 1993|1:39:37.247 |UTC |Time source is hardware calendar |
+|Mon Mar 1 1993 |1:39:58.716|UTC |Time source is hardware calendar |
 
 <details>
   <summary>S1</summary>
@@ -331,8 +413,12 @@ a.	Выполните соответствующую команду на S1 и S
 
 b.	Настройте S1 и S2 в качестве клиентов NTP. Используйте соответствующие команды NTP для получения времени от интерфейса G0/0/1 R1, а также для периодического обновления календаря или аппаратных часов коммутатора.
 
-    *команда*
+    ntp server 10.22.0.1
 
+    Команды ntp update-calendar  для 2960 нет СРТ
+  
+![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_13/pic/4-4-b3.png">
+  
 <details>
   <summary>S1</summary>
   <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_13/pic/4-4-b1.png">
