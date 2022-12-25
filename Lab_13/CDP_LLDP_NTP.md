@@ -2,7 +2,7 @@
 
 **Топология**
 
-![alt-текст]( "Схема")
+![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_13/pic/Shema.png "Схема")
 
 
 **Таблица адресации**
@@ -27,7 +27,7 @@
 
 #### Шаг 1. Создайте сеть согласно топологии.
 
-![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_13/pic/1png)
+![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_13/pic/1.png)
 
 #### Шаг 2. Настройте базовые параметры для маршрутизатора.
 
