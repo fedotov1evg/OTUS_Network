@@ -174,7 +174,7 @@ a.	На R1 используйте соответствующую команду 
 
     show cdp interface
 
-![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_13/pic/2-a.png)
+![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_13/pic/2-aa.png)
  
 > **Вопрос:** Сколько интерфейсов участвует в объявлениях CDP? Какие из них активны?
 > 
