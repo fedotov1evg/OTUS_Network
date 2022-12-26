@@ -2,6 +2,8 @@
 
 **Топология**
 
+![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/Shema.png)
+
 **Таблица адресации**
 
 | Устройство	| Интерфейс	| IP-адрес	| Маска подсети 	| Шлюз по умолчанию |
@@ -269,7 +271,6 @@ a.	Назначьте используемые порты соответству
 
   <details><summary>Настройка S1</summary>
   <pre>
-
 interface fastEthernet 0/6
 switchport mode access
 switchport access vlan 30
@@ -295,12 +296,12 @@ b.	Выполните команду show vlan brief, чтобы убедить�
 
 <details>
   <summary>S1 "show vlan brief"</summary>
-  <img src="">
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/2-2-b1.png">
 </details>
 
 <details>
   <summary>S2 "show vlan brief"</summary>
-  <img src="">
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/2-2-b2.png">
 </details>
 
 ---
@@ -339,7 +340,7 @@ d.	Выполните команду show interfaces trunk для проверк
 
 <details>
   <summary>S1 "show interfaces trunk" </summary>
-  <img src="">
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/3-1-d.png">
 </details>
 
 
@@ -364,7 +365,7 @@ copy running-config startup-config
 
 <details>
   <summary>S2  F0/5 "show interfaces trunk"</summary>
-  <img src="">
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/3-2-c.png">
 </details>
 
 ---
@@ -379,8 +380,31 @@ b.	Настройте подинтерфейсы для каждой VLAN, ка�
 
   <details><summary>Настройка S1</summary>
   <pre>
+interface gigabitEthernet 0/0/1
+no shutdown
 
+interface g0/0/1.20
+description Management
+encapsulation dot1Q 20
+ip add 10.20.0.1 255.255.255.0
+exit
 
+interface g0/0/1.30
+description Operations
+encapsulation dot1Q 30
+ip add 10.30.0.1 255.255.255.0
+exit
+
+interface g0/0/1.40
+description Sales
+encapsulation dot1Q 40
+ip add 10.40.0.1 255.255.255.0
+exit
+
+interface g0/0/1.1000
+description S
+encapsulation dot1Q 1000
+exit
 
   </pre>
   </details>
@@ -389,9 +413,10 @@ c.	Настройте интерфейс Loopback 1 на R1 с адресаци�
 
   <details><summary>Настройка Loopback 1</summary>
   <pre>
-
-
-
+interface  Loopback1
+ip add 172.16.1.1 255.255.255.0
+no shutdown
+exit
   </pre>
   </details>
   
@@ -399,7 +424,7 @@ d.	С помощью команды show ip interface brief проверьте �
 
 <details>
   <summary>S2  F0/5 "show ip interface brief"</summary>
-  <img src="">
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/4-1-d.png">
 </details>
 
 
@@ -407,8 +432,12 @@ d.	С помощью команды show ip interface brief проверьте �
 
   <details><summary>Настройка S1</summary>
   <pre>
+interface gigabitEthernet 0/0/1
+no shutdown
+ip add 10.20.0.4 255.255.255.0
+exit
 
-
+ip route 10.20.0.4 255.255.255.0 10.20.0.1
 
   </pre>
   </details>
@@ -416,9 +445,13 @@ d.	С помощью команды show ip interface brief проверьте �
 
 <details>
   <summary>S2  F0/5 "show ip interface brief"</summary>
-  <img src="">
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/4-2-d.png">
 </details>
 
+<details>
+  <summary>S2  F0/5 "show ip route"</summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/4-2-d.png">
+</details>
 
 ---
 
@@ -434,7 +467,57 @@ c.	Генерируйте криптоключи с помощью 1024 битн
 
 d.	Настройте первые пять линий VTY на каждом устройстве, чтобы поддерживать только SSH-соединения и с локальной аутентификацией.
 
-  <details><summary>Настройка S1</summary>
+<details><summary>Настройка R1</summary>
+  <pre>
+conf term
+
+ip ssh version 2
+username SSHadmin password $cisco123!
+
+ip domain name ccna-lab.com
+
+crypto key generate rsa general-keys 1024
+
+
+line vty 0 5
+login local
+transport input ssh
+exit
+
+
+  </pre>
+  </details>
+  
+<details><summary>Настройка R2</summary>
+  <pre>
+conf term
+ip ssh version 2
+username SSHadmin password $cisco123!
+ip domain name ccna-lab.com
+crypto key generate rsa general-keys 1024
+line vty 0 5
+login local
+transport input ssh
+exit
+  </pre>
+  </details>
+
+
+<details><summary>Настройка S1</summary>
+  <pre>
+conf term
+ip ssh version 2
+username SSHadmin password $cisco123!
+ip domain name ccna-lab.com
+crypto key generate rsa general-keys 1024
+line vty 0 5
+login local
+transport input ssh
+exit
+  </pre>
+  </details>
+  
+    <details><summary>Настройка S2</summary>
   <pre>
 
 
@@ -442,10 +525,24 @@ d.	Настройте первые пять линий VTY на каждом у�
   </pre>
   </details>
   
-
+<details><summary>Настройка S1</summary>
+  <pre>
+conf term
+ip ssh version 2
+username SSHadmin password $cisco123!
+ip domain name ccna-lab.com
+crypto key generate rsa general-keys 1024
+line vty 0 5
+login local
+transport input ssh
+exit
+  </pre>
+  </details>
 <details>
-  <summary>S2  F0/5 "show ip interface brief"</summary>
-  <img src="">
+  
+ <details>
+  <summary>S2  F0/5 "show ip route"</summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/5-1-r1.png">
 </details>
 
 
@@ -459,7 +556,10 @@ b.	Настройте R1 для проверки подлинности поль
 
 R1(config)# ip http authentication local
 
-
+ <details>
+  <summary>S2  F0/5 "show ip route"</summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/5-2-b.png">
+</details>
 
 ---
 
@@ -471,19 +571,65 @@ R1(config)# ip http authentication local
 
 ##### Шаг 2. Выполните следующие тесты. Эхозапрос должен пройти успешно.
 
-| От	| Протокол	| Назначение | Результат |
-| :-----: |:-------:| :---------:| :---------:|
-| PC-A	| Ping	| 10.40.0.10 | |
-| PC-A	| Ping	| 10.20.0.1 | |
-| PC-B	| Ping	| 10.30.0.10 | |
-| PC-B	| Ping	| 10.20.0.1 | |
-| PC-B	| Ping	| 172.16.1.1 | |
-| PC-B	| HTTPS	| 10.20.0.1 | |
-| PC-B	| HTTPS	| 172.16.1.1 | |
-| PC-B	| SSH	| 10.20.0.1 | |
-| PC-B	| SSH	| 172.16.1.1 | |
+| № | От	| Протокол	| Назначение | Результат |
+| :--:| :---: |:-----:| :---------:| :---------:|
+|1| PC-A	| Ping	| 10.40.0.10 | |
+|2| PC-A	| Ping	| 10.20.0.1 | |
+|3| PC-B	| Ping	| 10.30.0.10 | |
+|4| PC-B	| Ping	| 10.20.0.1 | |
+|5| PC-B	| Ping	| 172.16.1.1 | |
+|6| PC-B	| HTTPS	| 10.20.0.1 | |
+|7| PC-B	| HTTPS	| 172.16.1.1 | |
+|8| PC-B	| SSH	| 10.20.0.1 | |
+|9| PC-B	| SSH	| 172.16.1.1 | |
 
+ <details>
+  <summary>1 </summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/6-2-1.png">
+</details>
+  
+ <details>
+  <summary>2 </summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/6-2-2.png">
+</details>
+  
+   <details>
+  <summary>3 </summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/6-2-3.png">
+</details>
+  
+<details>
+  <summary>4 </summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/6-2-4.png">
+</details>
+  
+<details>
+  <summary>5 </summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/6-2-5.png">
+</details>
+  
+<details>
+  <summary>6 </summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/6-2-6.png">
+</details>
+  
+<details>
+  <summary>7 </summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/6-2-7.png">
+</details>
+  
+<details>
+  <summary>8 </summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/6-2-8.png">
+</details>
+  
+<details>
+  <summary>9 </summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/6-2-9.png">
+</details>
 
+  
+  
 ---
 ### Часть 7. Настройка и проверка списков контроля доступа (ACL)
 
