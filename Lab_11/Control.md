@@ -467,8 +467,8 @@ c.	Генерируйте криптоключи с помощью 1024 битн
 
 d.	Настройте первые пять линий VTY на каждом устройстве, чтобы поддерживать только SSH-соединения и с локальной аутентификацией.
 
-<details><summary>Настройка R1</summary>
-  <pre>
+<details><summary>Настройка R1, R2, S1, S2</summary>
+<pre>
 conf term
 
 ip ssh version 2
@@ -483,62 +483,9 @@ line vty 0 5
 login local
 transport input ssh
 exit
-
-
-  </pre>
-  </details>
+</pre>
+</details>
   
-<details><summary>Настройка R2</summary>
-  <pre>
-conf term
-ip ssh version 2
-username SSHadmin password $cisco123!
-ip domain name ccna-lab.com
-crypto key generate rsa general-keys 1024
-line vty 0 5
-login local
-transport input ssh
-exit
-  </pre>
-  </details>
-
-
-<details><summary>Настройка S1</summary>
-  <pre>
-conf term
-ip ssh version 2
-username SSHadmin password $cisco123!
-ip domain name ccna-lab.com
-crypto key generate rsa general-keys 1024
-line vty 0 5
-login local
-transport input ssh
-exit
-  </pre>
-  </details>
-  
-    <details><summary>Настройка S2</summary>
-  <pre>
-
-
-
-  </pre>
-  </details>
-  
-<details><summary>Настройка S1</summary>
-  <pre>
-conf term
-ip ssh version 2
-username SSHadmin password $cisco123!
-ip domain name ccna-lab.com
-crypto key generate rsa general-keys 1024
-line vty 0 5
-login local
-transport input ssh
-exit
-  </pre>
-  </details>
-<details>
   
  <details>
   <summary>S2  F0/5 "show ip route"</summary>
@@ -643,10 +590,32 @@ R1(config)# ip http authentication local
 
 Политика 4: Cеть Operations  не может отправлять ICMP эхозапросы в сеть Sales. Разрешены эхо-запросы ICMP к другим адресатам. 
 
-
 ##### Шаг 1. Проанализируйте требования к сети и политике безопасности для планирования реализации ACL.
 
+**Политика1.**
+
+
+**Политика2.**
+
+**Политика3.**
+
+**Политика4.**
+
+
 ##### Шаг 2. Разработка и применение расширенных списков доступа, которые будут соответствовать требованиям политики безопасности.
+
+**Политика1.**
+
+
+**Политика2.**
+
+**Политика3.**
+
+**Политика4.**
+
+
+
+
 
 ##### Шаг 3. Убедитесь, что политики безопасности применяются развернутыми списками доступа.
 
