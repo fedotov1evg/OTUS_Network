@@ -606,6 +606,9 @@ R1(config)# ip http authentication local
 
 **Политика1.**
 
+R1
+
+   
 
 **Политика2.**
 
