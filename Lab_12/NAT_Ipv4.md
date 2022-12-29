@@ -73,10 +73,17 @@ exit
 service password-encryption
 exit
 
-Настройте IP-адресации интерфейса, как указано в таблице выше.
+int g0/0/0
+ip add 209.165.200.230 255.255.255.248
+no shutdown
+exit
 
-Настройте маршрут по умолчанию. от R2 до  R1.
+int g0/0/1
+ip add 192.168.1.1 255.255.255.0
+no shutdown
+exit
 
+exit
 copy running-config startup-config
 </pre>
 </details>
@@ -101,9 +108,17 @@ exit
 service password-encryption
 exit
 
-Настройте IP-адресации интерфейса, как указано в таблице выше.
+int g0/0/0
+ip add 209.165.200.225 255.255.255.248
+no shutdown
+exit
 
-Настройте маршрут по умолчанию. от R2 до  R1.
+int Lo 1
+ip add 209.165.200.1 255.255.255.224
+no shutdown
+exit
+
+ip route 192.168.1.1 255.255.255.0 g0/0/0
 
 copy running-config startup-config
 </pre>
