@@ -262,12 +262,12 @@ ip default-gateway 10.22.0.1
  
  <details>
   <summary>Screenshot</summary>
-  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_13/pic/2-d1.png)">
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_13/pic/2-d1.png">
 </details>
 
 <details>
   <summary>Screenshot</summary>
-  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_13/pic/2-d2png)">
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_13/pic/2-d2.png">
 </details>
  
 e.	На R1 выполните команду show cdp entry S1 . 
@@ -296,7 +296,7 @@ Duplex: full
 
 > Вопрос: Какие дополнительные сведения доступны теперь?
 > 
->    Ответ
+>    Дополнительно показан IP адрес (  IP address : 10.22.0.2)
 
 
 f.	Отключить CDP глобально на всех устройствах. 
@@ -417,7 +417,7 @@ b.	Настройте S1 и S2 в качестве клиентов NTP. Исп�
 
     Команды ntp update-calendar  для 2960 нет СРТ
   
-![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_13/pic/4-4-b3.png">
+![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_13/pic/4-4-b3.png)
   
 <details>
   <summary>S1</summary>
