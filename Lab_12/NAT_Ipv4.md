@@ -2,7 +2,7 @@
 
 **Топология**
 
-![alt-текст]( "Схема")
+![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_12/pic/shema.png)
 
 
 **Таблица адресации**
@@ -83,6 +83,8 @@ ip add 192.168.1.1 255.255.255.0
 no shutdown
 exit
 
+ip route 209.165.200.0 255.255.255.224 209.165.200.225
+
 exit
 copy running-config startup-config
 </pre>
@@ -118,8 +120,9 @@ ip add 209.165.200.1 255.255.255.224
 no shutdown
 exit
 
-ip route 192.168.1.1 255.255.255.0 g0/0/0
+ip route 192.168.1.0 255.255.255.0 209.165.200.230
 
+exit
 copy running-config startup-config
 </pre>
 </details>
@@ -150,7 +153,7 @@ enable
 conf term
 no ip domain-lookup
 hostname S1
-banner motd #####S1 ENTER PASSWORD##########
+banner motd ###S1 ENTER PASSWORD###
 line console 0
 logging synchronous
 password cisco
@@ -162,7 +165,6 @@ password cisco
 login
 exit
 service password-encryption
-exit
 
 int range f0/2-4, f0/7-24, g0/1-2
 shutdown
@@ -185,7 +187,7 @@ enable
 conf term
 no ip domain-lookup
 hostname S2
-banner motd #####S2 ENTER PASSWORD##########
+banner motd ###S2 ENTER PASSWORD###
 line console 0
 logging synchronous
 password cisco
@@ -197,7 +199,7 @@ password cisco
 login
 exit
 service password-encryption
-exit
+
 
 int range f0/2-17, f0/19-24, g0/1-2
 shutdown
