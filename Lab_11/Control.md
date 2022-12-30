@@ -55,6 +55,8 @@
 
 ##### Шаг 1. Создайте сеть согласно топологии.
 
+![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/1-1.png)
+
 ##### Шаг 2. Произведите базовую настройку маршрутизаторов.
 
 
@@ -82,7 +84,7 @@ enable
 conf term
 no ip domain-lookup
 hostname R1
-banner motd #####R1 ENTER PASSWORD##########
+banner motd ##R1 ENTER PASSWORD##
 line console 0
 logging synchronous
 password cisco
@@ -107,7 +109,7 @@ enable
 conf term
 no ip domain-lookup
 hostname R2
-banner motd #####R2 ENTER PASSWORD######
+banner motd ##R2 ENTER PASSWORD##
 line console 0
 logging synchronous
 password cisco
@@ -147,7 +149,7 @@ enable
 conf term
 no ip domain-lookup
 hostname S1
-banner motd #########S1 ENTER PASSWORD########
+banner motd ##S1 ENTER PASSWORD##
 line console 0
 logging synchronous
 password cisco
@@ -172,7 +174,7 @@ enable
 conf term
 no ip domain-lookup
 hostname S2
-banner motd ######S2 ENTER PASSWORD#######
+banner motd ##S2 ENTER PASSWORD##
 line console 0
 logging synchronous
 password cisco
@@ -208,13 +210,16 @@ c.	Назначьте все неиспользуемые порты комму�
 conf term
 vlan 20
 name Management
-end
+ex
 vlan 30
 name Operations
-end
+ex
+vlan 40
+name Sales
+ex
 vlan 999
 name  Parking_Lot
-end
+ex
 
 interface vlan 20
 ip add 10.20.0.2 255.255.255.0
@@ -222,14 +227,13 @@ ip add 10.20.0.2 255.255.255.0
 interface range fastEthernet 0/2-4, fastEthernet 0/7-24, gigabitEthernet 0/1-2
 switchport mode access
 switchport access vlan 999
-end
+exit
 interface vlan 999
 shutdown
-end
+exit
 vlan 1000
 name S
-end
-
+ex
   </pre>
   </details>
 
@@ -240,27 +244,31 @@ end
 conf term
 vlan 20
 name Management
-end
+ex
+vlan 30
+name Operations
+ex
 vlan 40
 name Sales
-end
+ex
 vlan 999
 name  Parking_Lot
-end
+ex
 vlan 1000
 name S
-end
+ex
 
 interface vlan 20
 ip add 10.20.0.3 255.255.255.0
+ex
 
 interface range fastEthernet 0/2-4, fastEthernet 0/6-17, fastEthernet 0/19-24, gigabitEthernet 0/1-2
 switchport mode access
 switchport access vlan 999
-end
+ex
 interface vlan 999
 shutdown
-end
+ex
   </pre>
   </details>
   
@@ -274,21 +282,21 @@ a.	Назначьте используемые порты соответству
 interface fastEthernet 0/6
 switchport mode access
 switchport access vlan 30
-end
+ex
   </pre>
   </details>
 
 
   <details><summary>Настройка S2</summary>
   <pre>
-interface fastEthernet 0/1
+interface fastEthernet 0/5
 switchport mode access
 switchport access vlan 20
-end
+ex
 interface fastEthernet 0/18
 switchport mode access
 switchport access vlan 40
-end
+ex
   </pre>
   </details>
 
@@ -322,7 +330,7 @@ interface fastEthernet 0/1
 switchport mode trunk
 switchport trunk native vlan 1000
 switchport trunk allowed vlan 10,20,30,1000
-end
+exit
   </pre>
   </details>
 
@@ -332,7 +340,7 @@ interface fastEthernet 0/1
 switchport mode trunk
 switchport trunk native vlan 1000
 switchport trunk allowed vlan 10,20,30,1000
-end
+exit
   </pre>
   </details>
 
@@ -364,8 +372,8 @@ copy running-config startup-config
 
 
 <details>
-  <summary>S2  F0/5 "show interfaces trunk"</summary>
-  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/3-2-c.png">
+  <summary>S1  F0/5 "show interfaces trunk"</summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/3-2-c1.png">
 </details>
 
 ---
@@ -434,23 +442,24 @@ d.	С помощью команды show ip interface brief проверьте �
   <pre>
 interface gigabitEthernet 0/0/1
 no shutdown
+description R2 for S2
 ip add 10.20.0.4 255.255.255.0
 exit
 
-ip route 10.20.0.4 255.255.255.0 10.20.0.1
+ip route 0.0.0.0 0.0.0.0 10.20.0.1
 
   </pre>
   </details>
   
 
 <details>
-  <summary>S2  F0/5 "show ip interface brief"</summary>
-  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/4-2-d.png">
+  <summary>R2  "show ip interface brief"</summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/4-2-1.png">
 </details>
 
 <details>
-  <summary>S2  F0/5 "show ip route"</summary>
-  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/4-2-d.png">
+  <summary>R2 "show ip route"</summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/4-2-2.png">
 </details>
 
 ---
@@ -476,7 +485,7 @@ username SSHadmin password $cisco123!
 
 ip domain name ccna-lab.com
 
-crypto key generate rsa general-keys 1024
+crypto key generate rsa general-keys modulus 1024
 
 
 line vty 0 5
@@ -488,10 +497,24 @@ exit
   
   
  <details>
-  <summary>S2  F0/5 "show ip route"</summary>
-  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/5-1-r1.png">
+  <summary>S1 </summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/5-1-1.png">
 </details>
 
+ <details>
+  <summary>S2 </summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/5-1-2.png">
+</details>
+
+ <details>
+  <summary>R1  </summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/5-1-3.png">
+</details>
+
+ <details>
+  <summary>R2  </summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/5-1-4.png">
+</details>
 
 ##### Шаг 2. Включите защищенные веб-службы с проверкой подлинности на R1.
 
@@ -521,7 +544,7 @@ R1(config)# ip http authentication local
 | № | От	| Протокол	| Назначение | Результат |
 | :--:| :---: |:-----:| :---------:| :---------:|
 |1| PC-A	| Ping	| 10.40.0.10 | |
-|2| PC-A	| Ping	| 10.20.0.1 | |
+|2| PC-A	| Ping	| 10.20.0.1 | Успех |
 |3| PC-B	| Ping	| 10.30.0.10 | |
 |4| PC-B	| Ping	| 10.20.0.1 | |
 |5| PC-B	| Ping	| 172.16.1.1 | |
@@ -604,11 +627,31 @@ R1(config)# ip http authentication local
 
 ##### Шаг 1. Проанализируйте требования к сети и политике безопасности для планирования реализации ACL.
 
-**Политика1.**
+**Общее**
 
-R1
+Сеть Sales имеет доступ к сети через коммутатор S2
 
-   
+Cеть Management имеет доступ к сети через коммутатор R2
+
+Cеть Operations имеет доступ к сети через коммутатор S1
+
+При создании списков контроля доступа будем опираться на именованные списки с целью понимания какой лист за что отвечает, и упращению введения документирования.
+
+Политика в отношении сети Sales
+
+Сеть Sales не может использовать SSH в сети Management (но в  другие сети SSH разрешен)
+Сеть Sales не имеет доступа к IP-адресам в сети Management с помощью любого веб-протокола (HTTP/HTTPS)
+Сеть Sales также не имеет доступа к интерфейсам R1 с помощью любого веб-протокола.
+Сеть Sales не может отправлять эхо-запросы ICMP в сети Operations или Management. Разрешены эхо-запросы ICMP к другим адресатам.
+
+Политику 1.1 реализуем 
+
+
+
+Cеть Operations  не может отправлять ICMP эхозапросы в сеть Sales. Разрешены эхо-запросы ICMP к другим адресатам.
+
+
+
 
 **Политика2.**
 
