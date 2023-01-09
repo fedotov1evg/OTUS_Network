@@ -2,7 +2,7 @@
 
 **Топология**
 
-![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_12/pic/shema.png)
+![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_12/pic/Shema.png)
 
 
 **Таблица адресации**
@@ -266,7 +266,7 @@ a.	С PC-B,  запустите эхо-запрос интерфейса Lo1 (20
 
 ![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_12/pic/2-2-a1.png)
 
-![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_12/pic/2-1-a2.png)
+![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_12/pic/2-2-a2.png)
 
 
 > Во что был транслирован внутренний локальный адрес PC-B?
@@ -370,7 +370,7 @@ b.	С PC-A, запустите эхо-запрос интерфейса Lo1 (209
 
 c.	Генерирует трафик с нескольких устройств для наблюдения PAT. На PC-A и PC-B используйте параметр -t с командой ping, чтобы отправить безостановочный ping на интерфейс Lo1 R2 (ping -t 209.165.200.1), затем вернитесь к R1 и выполните команду show ip nat translations:
 
-![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_12/pic/3-3-c.png)
+![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_12/pic/3-3-%D1%81.png)
 
 > Как маршрутизатор отслеживает, куда идут ответы?
 > 
