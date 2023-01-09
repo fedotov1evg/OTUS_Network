@@ -204,13 +204,13 @@ R1(config)#
 </pre>
 </details>
 
-![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_10/pic/2-1-a1.png)
+![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_10/pic/2-1-a11.png)
 
-![alt-текст]()
+![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_10/pic/2-1-a12.png)
 
-![alt-текст]()
+![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_10/pic/2-1-a21.png)
 
-![alt-текст]()
+![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_10/pic/2-1-a22.png)
 
 
 b.	Перейдите в режим конфигурации маршрутизатора OSPF, используя идентификатор процесса 56.
