@@ -292,7 +292,7 @@ a.	На R1 настройте приоритет OSPF интерфейса G0/0/
     interface g0/0/1
     ip ospf priority 50
     end
-    clear ip osfp process
+    clear ip ospf process
 
 ![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_10/pic/3-1-a.png)
 
@@ -300,6 +300,7 @@ b.	Настройте таймеры OSPF на G0/0/1 каждого маршр�
 
      interface g0/0/1
      ip ospf hello-interval 30
+     ip ospf dead-interval 120
      end
      
 ![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_10/pic/3-1-b1.png)
@@ -308,27 +309,49 @@ b.	Настройте таймеры OSPF на G0/0/1 каждого маршр�
 
 c.	На R1 настройте статический маршрут по умолчанию, который использует интерфейс Loopback 1 в качестве интерфейса выхода. Затем распространите маршрут по умолчанию в OSPF. Обратите внимание на сообщение консоли после установки маршрута по умолчанию.
 
+    ip route 0.0.0.0 0.0.0.0 Loopback 1
     
+    router ospf 56
+    default-information originate
+    end
 
 ![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_10/pic/3-1-c.png)
 
 d.	добавьте конфигурацию, необходимую для OSPF для обработки R2 Loopback 1 как сети точка-точка. Это приводит к тому, что OSPF объявляет Loopback 1 использует маску подсети интерфейса.
 
-   
+   interface loopback 1
+   ip ospf network point-to-point 
 
 ![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_10/pic/3-1-d.png)
 
+![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_10/pic/3-1-d1.png)
+
 e.	Только на R2 добавьте конфигурацию, необходимую для предотвращения отправки объявлений OSPF в сеть Loopback 1.
 
-    
+     router ospf 56
+     passive-interface loopback 1
+     end
 
 ![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_10/pic/3-1-e.png)
 
 f.	Измените базовую пропускную способность для маршрутизаторов. После этой настройки перезапустите OSPF с помощью команды clear ip ospf process . Обратите внимание на сообщение консоли после установки новой опорной полосы пропускания.
 
+    router ospf 56
+    auto-cost reference-bandwidth 10000
 
 
-![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_10/pic/3-1-f.png)
+![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_10/pic/3-1-f1.png)
+
+
+![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_10/pic/3-1-f2.png)
+
+
+![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_10/pic/3-1-f3.png)
+
+
+![alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_10/pic/3-1-f4.png)
+
+
 
 #### Шаг 2. Убедитесь, что оптимизация OSPFv2 реализовалась.
 
@@ -356,6 +379,6 @@ d.	Запустите Ping до адреса интерфейса R1 Loopback 1 
 
 > Вопрос:Почему стоимость OSPF для маршрута по умолчанию отличается от стоимости OSPF в R1 для сети 192.168.1.0/24?
 >
->    Ответ
+>    
 
 
