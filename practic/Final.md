@@ -367,11 +367,15 @@ no shutdown
    network 10.1.0.2 0.0.0.0 area 0
    network 10.3.0.1 0.0.0.0 area 0
    
-   passive-interface g0/1
-   
+   passive-interface g0/1.10
+   passive-interface g0/1.11
    ex
    
-   interface G0/1
+   interface G0/1.10
+   ip ospf 20 area 0
+   ex
+   
+   interface G0/1.11
    ip ospf 20 area 0
    ex
    
@@ -387,13 +391,17 @@ no shutdown
    network 10.2.0.2 0.0.0.0 area 0
    network 10.3.0.2 0.0.0.0 area 0
    
-   passive-interface g0/1
+   passive-interface g0/1.10
+   passive-interface g0/1.11
    ex
    
-   interface G0/1
+   interface G0/1.10
    ip ospf 20 area 0
    ex
    
+   interface G0/1.11
+   ip ospf 20 area 0
+   ex
        
   </pre>
   </details>
