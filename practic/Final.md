@@ -1,19 +1,19 @@
-##### Часть 1. Проверка сети
+## Часть 1. Проверка сети
 
 
 
+## Часть 2. Настройка коммутаторов
 
 
+#### 2.1 базовая настройка коммутаторов и портов
 
-##### Часть 2. Настройка коммутаторов
-
-<details><summary> Код настройки S1 </summary>
+<details><summary> Код настройки SW1 </summary>
 <pre>
 enable
 conf term
 no ip domain-lookup
-hostname S1
-banner motd #####S1 ENTER PASSWORD##########
+hostname SW1
+banner motd ##SW1_ENTER_PASSWORD##
 line console 0
 logging synchronous
 password cisco
@@ -27,31 +27,19 @@ exit
 service password-encryption
 exit
 
-int g0/0/0
-ip add 209.165.200.225 255.255.255.248
-no shutdown
-exit
-
-int Lo 1
-ip add 209.165.200.1 255.255.255.224
-no shutdown
-exit
-
-ip route 192.168.1.0 255.255.255.0 209.165.200.230
-
 exit
 copy running-config startup-config
 </pre>
 </details>
 
 
-<details><summary> Код настройки S2 </summary>
+<details><summary> Код настройки SW2 </summary>
 <pre>
 enable
 conf term
 no ip domain-lookup
-hostname S2
-banner motd #####S2 ENTER PASSWORD##########
+hostname SW2
+banner motd ##SW2_ENTER_PASSWORD##
 line console 0
 logging synchronous
 password cisco
@@ -65,31 +53,19 @@ exit
 service password-encryption
 exit
 
-int g0/0/0
-ip add 209.165.200.225 255.255.255.248
-no shutdown
-exit
-
-int Lo 1
-ip add 209.165.200.1 255.255.255.224
-no shutdown
-exit
-
-ip route 192.168.1.0 255.255.255.0 209.165.200.230
-
 exit
 copy running-config startup-config
 </pre>
 </details>
 
 
-<details><summary> Код настройки S3 </summary>
+<details><summary> Код настройки SW3 </summary>
 <pre>
 enable
 conf term
 no ip domain-lookup
-hostname S3
-banner motd #####S3 ENTER PASSWORD##########
+hostname SW3
+banner motd ##SW3_ENTER_PASSWORD##
 line console 0
 logging synchronous
 password cisco
@@ -103,17 +79,167 @@ exit
 service password-encryption
 exit
 
-int g0/0/0
-ip add 209.165.200.225 255.255.255.248
+exit
+copy running-config startup-config
+</pre>
+</details>
+
+
+#### 2.2 Настройка LACP (SW 2 SW3)
+
+  <details><summary> LACP SW2 </summary>
+  <pre>
+   
+   
+  </pre>
+  </details>
+
+
+  <details><summary> LACP SW3 </summary>
+  <pre>
+   
+   
+  </pre>
+  </details>
+
+
+
+#### 2.3 Настройка PagP  (SW 2 SW1)
+
+  <details><summary> PagP  SW1 </summary>
+  <pre>
+   ТЕКСТ ТЕКСТ ТЕКСТ ТЕКСТ
+  </pre>
+  </details>
+  
+  <details><summary> PagP  SW2 </summary>
+  <pre>
+   ТЕКСТ ТЕКСТ ТЕКСТ ТЕКСТ
+  </pre>
+  </details>
+
+
+#### 2.3 Настройка RoS  (SW 1 SW3)
+
+  <details><summary>  RoS  SW1 </summary>
+  <pre>
+   ТЕКСТ ТЕКСТ ТЕКСТ ТЕКСТ
+  </pre>
+  </details>
+  
+  <details><summary>  RoS SW3 </summary>
+  <pre>
+   ТЕКСТ ТЕКСТ ТЕКСТ ТЕКСТ
+  </pre>
+  </details>
+
+
+## Часть 3. Настройка роутеров 
+
+
+#### 2.1 базовая настройка роутеров и портов
+
+<details><summary> Код настройки R1 </summary>
+<pre>
+enable
+conf term
+no ip domain-lookup
+hostname R1
+banner motd ##R1_ENTER_PASSWORD##
+line console 0
+logging synchronous
+password cisco
+login
+exit
+enable secret class
+line vty 0 15
+password cisco
+login
+exit
+service password-encryption
+exit
+
+int g0/2
+description R1 for R3
+ip add 10.1.0.2 255.255.255.252
 no shutdown
 exit
 
-int Lo 1
-ip add 209.165.200.1 255.255.255.224
+exit
+copy running-config startup-config
+</pre>
+</details>
+
+
+<details><summary> Код настройки R2 </summary>
+<pre>
+enable
+conf term
+no ip domain-lookup
+hostname R2
+banner motd ##R2_ENTER_PASSWORD##
+line console 0
+logging synchronous
+password cisco
+login
+exit
+enable secret class
+line vty 0 15
+password cisco
+login
+exit
+service password-encryption
+exit
+
+int g0/2
+description R2 for R3
+ip add 10.2.0.2 255.255.255.252
 no shutdown
 exit
 
-ip route 192.168.1.0 255.255.255.0 209.165.200.230
+exit
+copy running-config startup-config
+</pre>
+</details>
+
+
+<details><summary> Код настройки R3 </summary>
+<pre>
+enable
+conf term
+no ip domain-lookup
+hostname R3
+banner motd ##R3_ENTER_PASSWORD##
+line console 0
+logging synchronous
+password cisco
+login
+exit
+enable secret class
+line vty 0 15
+password cisco
+login
+exit
+service password-encryption
+exit
+
+int g0/0
+description R3 for R1
+ip add 10.1.0.1 255.255.255.252
+no shutdown
+exit
+
+int g0/1
+description R3 for R2
+ip add 10.2.0.1 255.255.255.252
+no shutdown
+exit
+
+int g0/2
+description R3 for WEB
+ip add 10.10.10.1 255.255.255.0
+no shutdown
+exit
 
 exit
 copy running-config startup-config
@@ -124,6 +250,42 @@ copy running-config startup-config
 
 
 
-##### Часть 3. Настройка роутеров 
+#### 2.2 Настройка HSRP (R1, R2)
 
-##### Часть 4. Проверка связи 
+  <details><summary>  HSRP R1 </summary>
+  <pre>
+   ТЕКСТ ТЕКСТ ТЕКСТ ТЕКСТ
+  </pre>
+  </details>
+  
+  <details><summary>  HSRP R2 </summary>
+  <pre>
+   ТЕКСТ ТЕКСТ ТЕКСТ ТЕКСТ
+  </pre>
+  </details>
+
+
+#### 2.3 Настройка OSPF
+
+  <details><summary>  OSPF R1 </summary>
+  <pre>
+   ТЕКСТ ТЕКСТ ТЕКСТ ТЕКСТ
+  </pre>
+  </details>
+
+  <details><summary>  OSPF R2 </summary>
+  <pre>
+   ТЕКСТ ТЕКСТ ТЕКСТ ТЕКСТ
+  </pre>
+  </details>
+
+  <details><summary>  OSPF R3 </summary>
+  <pre>
+   ТЕКСТ ТЕКСТ ТЕКСТ ТЕКСТ
+  </pre>
+  </details>
+
+## Часть 4. Проверка связи и конфигураций
+
+
+
