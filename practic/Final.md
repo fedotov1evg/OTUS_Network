@@ -461,7 +461,3 @@ ex
 
 
 ## Часть 4. Проверка связи и конфигураций
-
-
-spanning-tree mode rapid-pvst
-spanning-tree vlan 10 root primary 
