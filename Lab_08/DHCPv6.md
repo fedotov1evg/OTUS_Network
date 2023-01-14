@@ -210,11 +210,13 @@ a.	Настройте интерфейсы G0/0/0 и G0/1 на R1 и R2 с ад�
 
 int g0/0/1
 ipv6 add 2001:db8:acad:1::1/64
+ipv6 add fe80::1 link-local
 no shutdown
 ex
 
 int g0/0/0
 ipv6 add 2001:db8:acad:2::1/64
+ipv6 add fe80::1 link-local
 no shutdown
 ex
 
@@ -222,22 +224,33 @@ ex
 
 int g0/0/1
 ipv6 add 2001:db8:acad:3::1/64
+ipv6 add fe80::1 link-local
 no shutdown
 ex
 
 int g0/0/0
 ipv6 add 2001:db8:acad:2::2/64
+ipv6 add fe80::2 link-local
 no shutdown
 ex
 </pre>
 </details>
 
 
-![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_08/pic6/1-4-a.png)
+![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_08/pic6/1-4-a1.png)
+
+![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_08/pic6/1-4-a2.png)
 
 b.	Настройте маршрут по умолчанию на каждом маршрутизаторе, который указывает на IP-адрес G0/0/0 на другом маршрутизаторе.
 
-    код
+    R1
+    ipv6 route 2001:db8:acad:3::1/64 2001:db8:acad:2::2
+    
+    R2 
+    ipv6 route 2001:db8:acad:1::1/64 2001:db8:acad:2::1
+    
+    Команда маршрута по умолчанию:
+    ipv6 route  ::/0 g0/0/0
 
 ![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_08/pic6/1-4-b.png)
 
@@ -355,10 +368,13 @@ b.	Назначьте только что созданный пул DHCPv6 ин�
 
 a.	Настройте команду ipv6 dhcp relay на интерфейсе R2 G0/0/1, указав адрес назначения интерфейса G0/0/0 на R1. Также настройте команду **managed-config-flag** .
 
-    интерфейс g0/0/1
+    interface g0/0/1
     ipv6 nd managed-config-flag
     ipv6 dhcp relay destination 2001:db8:acad:2::1 g0/0/0
-    
+ 
+ **Команды ipv6 dhcp relay нет в CPT**
+ 
+ 
 ![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_08/pic6/5-2-a.png)
 
 b.	Сохраните конфигурацию.
@@ -371,6 +387,6 @@ b.	Откройте командную строку на PC-B и выполни�
 
 ![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_08/pic6/5-3-b.png)
 
-c.	Проверьте подключение с помощью пинга IP-адреса интерфейса R0 G0/0/1.
+c.	Проверьте подключение с помощью пинга IP-адреса интерфейса R1 G0/0/1.
 
 ![Alt-текст](https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_08/pic6/5-3-c.png)
