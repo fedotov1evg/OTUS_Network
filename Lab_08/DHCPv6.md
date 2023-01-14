@@ -67,7 +67,7 @@ enable
 conf term
 no ip domain-lookup
 hostname S1
-banner motd ##### S1 ENTER PASSWORD #####
+banner motd #####_S1_ENTER_PASSWORD_#####
 line console 0
 logging synchronous
 password cisco
@@ -84,8 +84,7 @@ int range f0/1-4, f0/7-24, g0/1-2
 shutdown
 exit
 
-exit
-copy running-config startup-config
+do copy running-config startup-config
 
 </pre>
 </details>
@@ -99,7 +98,7 @@ enable
 conf term
 no ip domain-lookup
 hostname S2
-banner motd ###### S2 ENTER PASSWORD ######
+banner motd ######_S2_ENTER_PASSWORD_######
 line console 0
 logging synchronous
 password cisco
@@ -116,8 +115,7 @@ int range f0/1-4, f0/6-17, f0/19-24, g0/1-2
 shutdown
 exit
 
-exit
-copy running-config startup-config
+do copy running-config startup-config
 
 </pre>
 </details>
@@ -151,7 +149,7 @@ enable
 conf term
 no ip domain-lookup
 hostname R1
-banner motd ###### R1 ENTER PASSWORD ######
+banner motd ######_R1_ENTER_PASSWORD_######
 line console 0
 logging synchronous
 password cisco
@@ -179,7 +177,7 @@ enable
 conf term
 no ip domain-lookup
 hostname R2
-banner motd ###### R2 ENTER PASSWORD ######
+banner motd ######_R2_ENTER_PASSWORD_######
 line console 0
 logging synchronous
 password cisco
@@ -211,24 +209,24 @@ a.	Настройте интерфейсы G0/0/0 и G0/1 на R1 и R2 с ад�
 ***R1***
 
 int g0/0/1
-ipv6 add 2001:db8:acad:1::1 link-local
+ipv6 add 2001:db8:acad:1::1/64
 no shutdown
 ex
 
 int g0/0/0
-ipv6 add 2001:db8:acad:2::1 link-local
+ipv6 add 2001:db8:acad:2::1/64
 no shutdown
 ex
 
 ***R2***
 
 int g0/0/1
-ipv6 add 2001:db8:acad:3::1 link-local
+ipv6 add 2001:db8:acad:3::1/64
 no shutdown
 ex
 
 int g0/0/0
-ipv6 add 2001:db8:acad:2::2 link-local
+ipv6 add 2001:db8:acad:2::2/64
 no shutdown
 ex
 </pre>
