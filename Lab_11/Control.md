@@ -662,25 +662,36 @@ Cеть Operations имеет доступ к сети через коммута
 
   <details><summary>Настройка S1</summary>
   <pre>
-ip access-list extended OUT_OPER
-deny ssh 10.40.0.0 255.255.255.0 10.20.0.0 255.255.255.0 
-deny tcp 10.40.0.0 255.255.255.0 10.20.0.0 255.255.255.0 eq www
-deny tcp 10.40.0.0 255.255.255.0 172.16.1.1	255.255.255.255
-deny icmp 10.40.0.0 255.255.255.0 10.30.0.0 255.255.255.0
+ip access-list extended OUT_OPER_1
+deny tcp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 eq 22
+deny tcp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 eq www
+deny icmp 10.40.0.0 0.0.0.255  10.30.0.0 0.0.0.255 
 deny icmp 10.40.0.0 255.255.255.0 10.20.0.0 255.255.255.0
 200 permit ip any any
+
+interface g0/0/1.40
+ip access-group OUT_OPER_1 in
+ex
   </pre>
   </details>
   
+ 
   
   <details><summary>Настройка S1</summary>
   <pre>
 
-ip access-list standard OUT_OPER
-deny icmp 10.30.0.0 255.255.255.0 10.40.0.0 255.255.255.0
+ip access-list standard OUT_OPER_2
+deny icmp 10.30.0.0 0.0.0.255 10.40.0.0 0.0.0.255
 200 permit ip any any
 remark Operations no ICMP echo requests to the Sales
 
+
+R1(config)#interface g0/0/1
+R1(config-if)#ip access-
+R1(config-if)#ip access-group OPER_2 in
+R1(config-if)#
+R1(config-if)#
+R1(config-if)#ex
 
   </pre>
   </details>
@@ -692,16 +703,45 @@ remark Operations no ICMP echo requests to the Sales
 
 | № | От	| Протокол	| Назначение	| Результат | Состояние |
 |:--:| :---: |:----:| :----------:| :--------:| :--------:|
-|1| PC-A	| Ping	| 10.40.0.10	| Сбой | |
-|2| PC-A	| Ping	| 10.20.0.1	| Успех | |
-|3| PC-B	| Ping	| 10.30.0.10	| Сбой | |
-|4| PC-B	| Ping	| 10.20.0.1	| Сбой | |
-|5| PC-B	| Ping	| 172.16.1.1	| Успех | |
+|1| PC-A	| Ping	| 10.40.0.10	| Сбой | Выполнено |
+|2| PC-A	| Ping	| 10.20.0.1	| Успех | Выполнено |
+|3| PC-B	| Ping	| 10.30.0.10	| Сбой |  Выполнено |
+|4| PC-B	| Ping	| 10.20.0.1	| Сбой | Выполнено |
+|5| PC-B	| Ping	| 172.16.1.1	| Успех | Выполнено |
 |6| PC-B	| HTTPS	| 10.20.0.1	| Сбой | |
 |7| PC-B	| HTTPS	| 172.16.1.1	| Успех | |
-|8| PC-B	| SSH	| 10.20.0.4	| Сбой | |
-|9| PC-B	| SSH	| 172.16.1.1	| Успех | |
+|8| PC-B	| SSH	| 10.20.0.1	| Сбой | Выполнено |
+|9| PC-B	| SSH	| 172.16.1.1	| Успех | Выполнено |
 
 
 
+ <details>
+  <summary>1-2 </summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/7-3-1.png">
+</details>
+  
+    <details>
+  <summary>3-5 </summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/7-3-3.png">
+</details>
+  
 
+<details>
+  <summary>6 </summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/7-3-6.png">
+</details>
+  
+<details>
+  <summary>7 </summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/7-3-7.png">
+</details>
+  
+<details>
+  <summary>8 </summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/7-3-8.png">
+</details>
+  
+<details>
+  <summary>9 </summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_11/pic/7-3-9.png">
+</details>
