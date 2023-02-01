@@ -662,11 +662,13 @@ Cеть Operations имеет доступ к сети через коммута
 
   <details><summary>Настройка S1</summary>
   <pre>
-ip access-list extended IN_
-deny icmp 10.40.0.0 255.255.255.0 10.30.0.0 255.255.255.0 
-deny icmp 10.40.0.0 255.255.255.0 10.30.0.0 255.255.255.0 
-deny icmp 10.40.0.0 255.255.255.0 10.30.0.0 255.255.255.0 
-deny icmp 10.40.0.0 255.255.255.0 10.30.0.0 255.255.255.0 
+ip access-list extended OUT_OPER
+deny ssh 10.40.0.0 255.255.255.0 10.20.0.0 255.255.255.0 
+deny tcp 10.40.0.0 255.255.255.0 10.20.0.0 255.255.255.0 eq www
+deny tcp 10.40.0.0 255.255.255.0 172.16.1.1	255.255.255.255
+deny icmp 10.40.0.0 255.255.255.0 10.30.0.0 255.255.255.0
+deny icmp 10.40.0.0 255.255.255.0 10.20.0.0 255.255.255.0
+200 permit ip any any
   </pre>
   </details>
   
@@ -675,8 +677,10 @@ deny icmp 10.40.0.0 255.255.255.0 10.30.0.0 255.255.255.0
   <pre>
 
 ip access-list standard OUT_OPER
-deny icmp 10.30.0.0 255.255.255.0 10.40.0.0 255.255.255.0 
-remark Operations no ICMP echo requests to the Sales 
+deny icmp 10.30.0.0 255.255.255.0 10.40.0.0 255.255.255.0
+200 permit ip any any
+remark Operations no ICMP echo requests to the Sales
+
 
   </pre>
   </details>
