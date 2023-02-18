@@ -94,6 +94,7 @@ do copy running-config startup-config
 
 <details><summary> Код настройки R1 </summary>
 <pre>
+
 ****Базовая настройка****
 enable
 conf term
@@ -153,6 +154,7 @@ ipv6 dhcp server R2-STATEFUL
 
 <details><summary> Код настройки R2 </summary>
 <pre>
+
 ****Базовая настройка****
 enable
 conf term
@@ -212,6 +214,14 @@ ipv6 dhcp relay destination 2001:db8:acad:2::1 g0/0/0
 </details>
 
 Информация о том что компьютер РС-В теперь получает шз адрес от DHCP сервера. Указаны его имя домена и адрес DNS (2001:db8:acad::254) DHCP сервера (STATEFUL.com)
+
+**настройкка ретронсляции на R2**
+
+<details>
+  <summary>Screenshot</summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_08/pic6-eve/2.png">
+</details>
+
 
 #### Проверка подключений с помощью пинга
 
