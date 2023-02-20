@@ -11,13 +11,13 @@
 
 | Устройство	| Интерфейс	| IPv6-адрес |
 | :---------: | :-------: | :-------: |
-| R1	| G0/0/0	| 2001:db8:acad:2::1/64 |
+| R1	| e0/0	| 2001:db8:acad:2::1/64 |
 | 	| 	| fe80::1 |
-| 	| G0/0/1	| 2001:db8:acad:1::1/64 |
+| 	| e0/1	| 2001:db8:acad:1::1/64 |
 | 	| 	| fe80::1 |
-| R2| G0/0/0	| 2001:db8:acad:2::2/64 |
+| R2| e0/0	| 2001:db8:acad:2::2/64 |
 |   | 	| fe80::2 |
-| 	| G0/0/1	| 2001:db8:acad:3::1/64 |
+| 	| e0/1	| 2001:db8:acad:3::1/64 |
 | 	| 	| fe80::1 |
 | PC-A	| NIC	| DHCP |
 | PC-B	| NIC	| DHCP |
@@ -116,13 +116,13 @@ exit
 ****Настройка портов****
 ipv6 unicast-routing
 
-int g
+int e0/1
 ipv6 add 2001:db8:acad:1::1/64
 ipv6 add fe80::1 link-local
 no shutdown
 ex
 
-int g
+int e0/0
 ipv6 add 2001:db8:acad:2::1/64
 ipv6 add fe80::1 link-local
 no shutdown
@@ -136,7 +136,7 @@ ipv6 dhcp pool R1-STATELESS
 dns-server 2001:db8:acad::254
 domain-name STATELESS.com
 
-interface g0/0/1
+interface e0/1
 ipv6 nd other-config-flag
 ipv6 dhcp server R1-STATELESS
 
@@ -146,7 +146,7 @@ address prefix 2001:db8:acad:3:aaa::/80
 dns-server 2001:db8:acad::254
 domain-name STATEFUL.com
 
-interface g0/0/0
+interface e0/0
 ipv6 dhcp server R2-STATEFUL
     
 </pre>
@@ -160,7 +160,7 @@ enable
 conf term
 no ip domain-lookup
 hostname R2
-banner motd ######_R2_ENTER_PASSWORD_######
+banner motd _R2_ENTER_PASSWORD_
 line console 0
 logging synchronous
 password cisco
@@ -168,7 +168,7 @@ login
 exit
 service password-encryption
 enable secret class
-line vty 0 15
+line vty 0 4
 password cisco
 login
 exit
@@ -176,12 +176,12 @@ exit
 ****Настройка портов****
 ipv6 unicast-routing
 
-int 
+int e0/1
 ipv6 add 2001:db8:acad:3::1/64
 ipv6 add fe80::1 link-local
 no shutdown
 ex
-int 
+int e0/0
 ipv6 add 2001:db8:acad:2::2/64
 ipv6 add fe80::2 link-local
 no shutdown
@@ -191,9 +191,9 @@ ex
 ipv6 route 2001:db8:acad:1::1/64 2001:db8:acad:2::1
 
 ****Настройка ретронсляции****
-interface g0/0/1
+interface e0/1
 ipv6 nd managed-config-flag
-ipv6 dhcp relay destination 2001:db8:acad:2::1 g0/0/0
+ipv6 dhcp relay destination 2001:db8:acad:2::1 e0/0
 
 </pre>
 </details>
