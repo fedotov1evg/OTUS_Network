@@ -227,21 +227,21 @@ ipv6 dhcp relay destination 2001:db8:acad:2::1 e0/0
 
 
 <details>
-  <summary>ping PC-B до </summary>
+  <summary>ping PC-B до R2 e0/0 </summary>
   <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_08/pic6-eve/p-1.png">
 </details>
 
 <details>
-  <summary>ping PC-B до </summary>
+  <summary>ping PC-B до R1 e0/0 </summary>
   <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_08/pic6-eve/p-2.png">
 </details>
 
 <details>
-  <summary>ping PC-B до </summary>
+  <summary>ping PC-B до R1 e0/1 </summary>
   <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_08/pic6-eve/p-3.png">
 </details>
 
 <details>
-  <summary>ping PC-B до </summary>
+  <summary>ping PC-B до PC-A </summary>
   <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_08/pic6-eve/p-4.png">
 </details>
