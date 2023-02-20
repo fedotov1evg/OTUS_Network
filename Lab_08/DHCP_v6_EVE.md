@@ -198,6 +198,13 @@ ipv6 dhcp relay destination 2001:db8:acad:2::1 e0/0
 </pre>
 </details>
 
+
+<details>
+  <summary>Настройка ретронсляции на R2</summary>
+  <img src="https://github.com/fedotov1evg/OTUS_Network/blob/main/Lab_08/pic6-eve/5.png">
+</details>
+
+
 #### Попытка получить адрес IPv6 из DHCPv6 на PC-A.
 
 <details>
